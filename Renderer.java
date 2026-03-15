@@ -10,6 +10,10 @@ public class Renderer {
         //Mesh is hardcoded dw abt that
         ArrayList<Triangle> mesh = new ArrayList<>();
 
+        //transform vertices to camera space
+
+        //multiply by projection matrix
+
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400,400);
         frame.setVisible(true);

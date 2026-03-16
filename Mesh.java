@@ -17,9 +17,11 @@ public class Mesh {
     public Mesh(Triangle... triangles){
         this.triangles.addAll(Arrays.asList(triangles));
     }
-
     public Mesh(ArrayList<Triangle> triangles){
         this.triangles.addAll(triangles);
+    }
+    public Mesh(File meshTxt) throws FileNotFoundException {
+        txtToTriangles(meshTxt);
     }
 
     public void txtToTriangles(File meshTxt) throws FileNotFoundException {
@@ -29,21 +31,24 @@ public class Mesh {
         double[] vertexCoords = new double[3];
         Vertex[] verticesTemp = new Vertex[3];
         while (text.hasNext()){
-            if(numDoubles % 3 == 0 && numDoubles != 0){
-                if(numDoubles % 9 == 0){
+            //if(numDoubles % 3 == 0 && numDoubles != 0){
+                if(numDoubles % 9 == 3){
                     verticesTemp[0] = new Vertex(vertexCoords[0],vertexCoords[1],vertexCoords[2]);
+                }
+                else if(numDoubles % 9 == 6){
+                    verticesTemp[1] = new Vertex(vertexCoords[0],vertexCoords[1],vertexCoords[2]);
                 }
                 else if(numDoubles % 9 == 0){
-                    verticesTemp[0] = new Vertex(vertexCoords[0],vertexCoords[1],vertexCoords[2]);
+                    verticesTemp[2] = new Vertex(vertexCoords[0],vertexCoords[1],vertexCoords[2]);
+                    triangles.add(new Triangle(verticesTemp));
                 }
-            }
+           // }
 
-            if(numDoubles % 9 == 0 && numDoubles != 0){
-                triangles.add(new Triangle(verticesTemp));
-            }
 
             if(text.hasNextDouble()){
-                System.out.println(text.nextDouble());
+                double number = text.nextDouble();
+                //System.out.println(number);
+                vertexCoords[numDoubles%3] = number;
                 numDoubles += 1;
             }
             else{
@@ -52,6 +57,21 @@ public class Mesh {
         }
     }
 
+    //gets
+    public ArrayList<Triangle> getTriangles(){
+        return triangles;
+    }
+    public double getX(){
+        return posX;
+    }
+    public double getY() {
+        return posY;
+    }
+    public double getZ(){
+        return posZ;
+    }
+
+    //sets
     public void setRotate(double x, double y, double z){
         rotX += x;
         rotY += y;
@@ -60,13 +80,11 @@ public class Mesh {
         if(rotY >= 360) rotY -= 360;
         if(rotZ >= 360) rotZ -= 360;
     }
-
     public void setScale(double x, double y, double z){
         scaleX *= x;
         scaleY *= y;
         scaleZ *= z;
     }
-
     public void setPosition(double x, double y, double z){
         posX *= x;
         posY *= y;

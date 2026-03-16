@@ -17,7 +17,7 @@ public class Renderer {
         return result;
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws FileNotFoundException {
 
         //again checking if matrix works
         double[][] multiplicand = new double[][] {
@@ -43,9 +43,10 @@ public class Renderer {
         Camera camera = new Camera(1,1,1,90,0,0,0);
 
         //set up mesh
-        Mesh mesh = new Mesh();
         File meshTxt = new File("cube.txt");
-
+        Mesh mesh = new Mesh(meshTxt);
+        //IT WORKS
+        System.out.println(mesh.getTriangles().get(4).getVertices()[2].getZ());
 
 
         //object space to world space

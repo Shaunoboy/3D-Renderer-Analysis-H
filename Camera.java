@@ -19,5 +19,29 @@ public class Camera {
         this.FOV = FOV;
     }
 
+    public double getX(){
+        return posX;
+    }
+    public double getY() {
+        return posY;
+    }
+    public double getZ(){
+        return posZ;
+    }
+    public double[] getPos() {
+        return new double[]{posX, posY, posZ};
+    }
+    public double getRotX(){
+        return rotX;
+    }
+    public double getRotY(){
+        return rotY;
+    }
+    public double getRotZ(){
+        return rotZ;
+    }
+    public double[] getRot() {
+        return new double[]{rotX, rotY, rotZ};
+    }
 
 }

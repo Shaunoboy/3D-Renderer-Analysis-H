@@ -2,13 +2,22 @@ public class MatrixHandler {
 
     //matrices should look like this {{}}
     public static Vertex vertexMultiplication(Vertex vertex, double[][] matrix){
-        Vertex result = new Vertex();
+        double[][] vertexMat = {vertex.getArr()};
+        vertexMat = matrixMultiplication(vertexMat, matrix);
 
-
-        return null;
+        Vertex result = new Vertex(vertexMat[0]);
+        return result;
     }
 
     public static double[][] findCameraSpaceMatrix(Camera camera, Vertex vertex){
+        return null;
+    }
+
+    public static double[][] findProjectionMatrix(Camera camera, Vertex vertex){
+        return null;
+    }
+
+    public static double[][] findWorldSpaceMatrix(Mesh mesh, Vertex vertex){
         return null;
     }
     //matrices look like this; double[row][col]

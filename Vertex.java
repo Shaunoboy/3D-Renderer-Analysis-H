@@ -14,6 +14,11 @@ public class Vertex {
         this.y = 0.0;
         this.z = 0.0;
     }
+    public Vertex(double[] coords){
+        this.x = coords[0];
+        this.y = coords[1];
+        this.z = coords[2];
+    }
 
     public double getX(){
         return x;
@@ -23,5 +28,8 @@ public class Vertex {
     }
     public double getZ(){
         return z;
+    }
+    public double[] getArr(){
+        return new double[]{x, y, z};
     }
 }

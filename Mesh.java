@@ -33,13 +33,13 @@ public class Mesh {
         while (text.hasNext()){
             //if(numDoubles % 3 == 0 && numDoubles != 0){
                 if(numDoubles % 9 == 3){
-                    verticesTemp[0] = new Vertex(vertexCoords[0],vertexCoords[1],vertexCoords[2]);
+                    verticesTemp[0] = new Vertex(vertexCoords);
                 }
                 else if(numDoubles % 9 == 6){
-                    verticesTemp[1] = new Vertex(vertexCoords[0],vertexCoords[1],vertexCoords[2]);
+                    verticesTemp[1] = new Vertex(vertexCoords);
                 }
                 else if(numDoubles % 9 == 0){
-                    verticesTemp[2] = new Vertex(vertexCoords[0],vertexCoords[1],vertexCoords[2]);
+                    verticesTemp[2] = new Vertex(vertexCoords);
                     triangles.add(new Triangle(verticesTemp));
                 }
            // }
@@ -69,6 +69,33 @@ public class Mesh {
     }
     public double getZ(){
         return posZ;
+    }
+    public double[] getPos() {
+        return new double[]{posX, posY, posZ};
+    }
+    public double getRotX(){
+        return rotX;
+    }
+    public double getRotY(){
+        return rotY;
+    }
+    public double getRotZ(){
+        return rotZ;
+    }
+    public double[] getRot() {
+        return new double[]{rotX, rotY, rotZ};
+    }
+    public double getScaleX(){
+        return scaleX;
+    }
+    public double getScaleY(){
+        return scaleY;
+    }
+    public double getScaleZ(){
+        return scaleZ;
+    }
+    public double[] getScale() {
+        return new double[]{scaleX, scaleY, scaleZ};
     }
 
     //sets

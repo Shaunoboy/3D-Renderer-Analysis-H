@@ -16,6 +16,7 @@ public class Renderer {
         }
         return result;
     }
+    
 
     public static void main(String[] args) throws FileNotFoundException {
 
@@ -48,7 +49,11 @@ public class Renderer {
         //IT WORKS
         System.out.println(mesh.getTriangles().get(4).getVertices()[2].getZ());
 
+        // now it's time for triangle work
+        // iterate through ever triangle
+        for(Triangle triangle : mesh.getTriangles()){
 
+        }
         //object space to world space
         // rotation, scale, then translation
 

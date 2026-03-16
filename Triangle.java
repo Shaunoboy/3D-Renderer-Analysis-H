@@ -10,12 +10,10 @@ public class Triangle {
         vertices[2] = v3;
         color = Color.GRAY;
     }
-
     public Triangle(Vertex[] vertices){
         this.vertices = vertices;
         color = Color.GRAY;
     }
-
     public Triangle(Vertex v1, Vertex v2, Vertex v3, Color color){
         vertices[0] = v1;
         vertices[1] = v2;

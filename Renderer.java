@@ -4,7 +4,6 @@ import java.io.*;
 import java.util.*;
 
 public class Renderer {
-
     //dw abt this, checking if matrix multipication works
     public static String toString(double[][] m) {
         String result = "";

@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.awt.*;
 
 public class Triangle {
@@ -29,5 +30,14 @@ public class Triangle {
         vertices[0] = new1;
         vertices[1] = new2;
         vertices[2] = new3;
+    }
+    public void drawTriangle(JFrame frame) {
+        Graphics g = frame.getGraphics();
+        //Want to create a conversions from vertex in array to actual display
+        g.drawLine(vertices[1].vertexToProjX(),vertices[1].vertexToProjY(),vertices[2].vertexToProjX(),vertices[2].vertexToProjY());
+        g.drawLine(vertices[2].vertexToProjX(),vertices[2].vertexToProjY(),vertices[3].vertexToProjX(),vertices[3].vertexToProjY());
+        g.drawLine(vertices[3].vertexToProjX(),vertices[3].vertexToProjY(),vertices[1].vertexToProjX(),vertices[2].vertexToProjY());
+
+
     }
 }

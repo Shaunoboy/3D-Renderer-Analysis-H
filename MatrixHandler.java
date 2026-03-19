@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class MatrixHandler {
 
     //matrices should look like this {{}}
@@ -10,7 +12,18 @@ public class MatrixHandler {
     }
 
     public static double[][] findCameraSpaceMatrix(Camera camera, Vertex vertex){
-        return null;
+        double[][] projMatrix = new double[4][4];
+        
+        //setting it up
+        float scale = 1 / Math.tan(Math.toRadians(camera.getFOV) * 0.5); 
+        projMatrix[0][0] = scale;  // scale the x coordinates of the projected point 
+        projMatrix[1][1] = scale;  // scale the y coordinates of the projected point 
+        projMatrix[2][2] = -far / (far - near);  // used to remap z to [0,1] 
+        projMatrix[3][2] = -far * near / (far - near);  // used to remap z [0,1] 
+        projMatrix[2][3] = -1;  // set w = -z 
+        projMatrix[3][3] = 0; 
+
+        return projMatrix;
     }
 
     public static double[][] findProjectionMatrix(Camera camera, Vertex vertex){

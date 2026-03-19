@@ -6,10 +6,12 @@ public class Camera {
     double rotY;
     double rotZ;
     double FOV;
+    double far;
+    double near; 
 
 
 
-    public Camera(double x, double y, double z, double FOV, double rotx, double roty, double rotz){
+    public Camera(double x, double y, double z, double FOV, double rotx, double roty, double rotz, double far){
         posX = x;
         posY = y;
         posZ = z;
@@ -17,6 +19,7 @@ public class Camera {
         rotY = roty;
         rotZ = rotz;
         this.FOV = FOV;
+        this.far = far;
     }
 
     public double getX(){
@@ -40,8 +43,14 @@ public class Camera {
     public double getRotZ(){
         return rotZ;
     }
-    public double[] getRot() {
+    public double[] getRot(){
         return new double[]{rotX, rotY, rotZ};
+    }
+    public double getFOV(){
+        return FOV;
+    }
+    public double getFar(){
+        return far;
     }
 
 }

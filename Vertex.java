@@ -3,7 +3,10 @@ public class Vertex {
     double y;
     double z;
     double magnitude;
+
+    //here?
     double focalLength = 1.0;
+
     public Vertex(double x, double y, double z){
         this.x = x;
         this.y = y;
@@ -19,12 +22,15 @@ public class Vertex {
         this.y = coords[1];
         this.z = coords[2];
     }
+
+    //what does this do?
     public int vertexToProjX() {
         return (int) ((x * (focalLength)/(focalLength / z)));
     }
     public int vertexToProjY() {
         return (int) ((y * (focalLength)/(focalLength / z)));
     }
+
     public double getX(){
         return x;
     }
@@ -34,6 +40,7 @@ public class Vertex {
     public double getZ(){
         return z;
     }
+
     public double[] getArr(){
         return new double[]{x, y, z};
     }

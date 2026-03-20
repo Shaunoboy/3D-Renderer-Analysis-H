@@ -2,16 +2,19 @@ public class Camera {
     double posX;
     double posY;
     double posZ;
+    // rotations are relative to itself NOT the world space
     double rotX;
     double rotY;
     double rotZ;
     double FOV;
-    double far;
-    double near; 
+
+    // variables used for projection matrix
+    double zFar;
+    double zNear;
 
 
 
-    public Camera(double x, double y, double z, double FOV, double rotx, double roty, double rotz, double far){
+    public Camera(double x, double y, double z, double FOV, double rotx, double roty, double rotz, double far, double near){
         posX = x;
         posY = y;
         posZ = z;
@@ -19,7 +22,8 @@ public class Camera {
         rotY = roty;
         rotZ = rotz;
         this.FOV = FOV;
-        this.far = far;
+        this.zFar = far;
+        this.zNear = near;
     }
 
     public double getX(){
@@ -49,8 +53,11 @@ public class Camera {
     public double getFOV(){
         return FOV;
     }
-    public double getFar(){
-        return far;
+    public double getzFar(){
+        return zFar;
+    }
+    public double getzNear(){
+        return zNear;
     }
 
 }

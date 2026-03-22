@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.io.*;
 import java.util.*;
@@ -12,32 +13,31 @@ public class Renderer {
 
         //set up frame
         JFrame frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800,800);
-
-        //set up camera
-        Camera camera = new Camera(1,1,1,90,0,0,0,0.1,1000);
-
-        //set up mesh
-        File meshTxt = new File("cube.txt");
-        Mesh mesh = new Mesh(meshTxt);
+        GraphicsPanel graphicsPanel = new GraphicsPanel();
+        Container pane = frame.getContentPane();
+        pane.setLayout(new BorderLayout());
+        /* horizontal slider
+        JSlider headingSlider = new JSlider(-180, 180, 0);
+        pane.add(headingSlider, BorderLayout.SOUTH);
+        // vertical slider
+        JSlider pitchSlider = new JSlider(SwingConstants.VERTICAL, -90, 90, 0);
+        pane.add(pitchSlider, BorderLayout.EAST);
+        */
         //IT WORKS
-        System.out.println(mesh.getTriangles().get(4).getVertices()[2].getZ());
+        //System.out.println(mesh.getTriangles().get(4).getVertices()[2].getZ());
 
-        // now it's time for triangle work
-        // iterate through ever triangle
-        for(Triangle triangle : mesh.getTriangles()){
-            //object space to world space
-            // rotation, scale, then translation
+        //headingSlider.addChangeListener(e -> graphicsPanel.repaint());
+        //pitchSlider.addChangeListener(e -> graphicsPanel.repaint());
 
-            //transform vertices to camera space
-            // translation, then rotation
-
-            //multiply by projection matrix
-        }
+        //Vertex check = new Vertex(3,3,3);
+        //check = MatrixHandler.verMult(check, MatrixHandler.findCameraSpaceMatrix(new Camera(1,1,1,90,0,0,0,0.1,1000)));
+        //System.out.println(check.toString());
 
 
-        //done!
+        pane.add(graphicsPanel, BorderLayout.CENTER);
         frame.setVisible(true);
+        frame.setSize(800,800);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //frame.add(graphicsPanel);
     }
 }

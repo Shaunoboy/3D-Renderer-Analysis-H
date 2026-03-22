@@ -27,34 +27,44 @@ public class Mesh {
     public void txtToTriangles(File meshTxt) throws FileNotFoundException {
         Scanner text = new Scanner(meshTxt);
 
-        int numDoubles = 0;
+        int count = 0;
         double[] vertexCoords = new double[3];
         Vertex[] verticesTemp = new Vertex[3];
-        while (text.hasNext()){
-            //if(numDoubles % 3 == 0 && numDoubles != 0){
-                if(numDoubles % 9 == 3){
-                    verticesTemp[0] = new Vertex(vertexCoords);
-                }
-                else if(numDoubles % 9 == 6){
-                    verticesTemp[1] = new Vertex(vertexCoords);
-                }
-                else if(numDoubles % 9 == 0){
-                    verticesTemp[2] = new Vertex(vertexCoords);
-                    triangles.add(new Triangle(verticesTemp));
-                }
-           // }
 
+        while (text.hasNext()) {
 
-            if(text.hasNextDouble()){
+            if (text.hasNextDouble()) {
                 double number = text.nextDouble();
-                //System.out.println(number);
-                vertexCoords[numDoubles%3] = number;
-                numDoubles += 1;
-            }
-            else{
-                text.next();
+
+                vertexCoords[count % 3] = number;
+                count++;
+
+                // Every 3 numbers → make a vertex
+                if (count % 3 == 0) {
+                    Vertex v = new Vertex(
+                            vertexCoords[0],
+                            vertexCoords[1],
+                            vertexCoords[2]
+                    );
+
+                    verticesTemp[(count / 3 - 1) % 3] = v;
+                }
+
+                // Every 9 numbers → make a triangle
+                if (count % 9 == 0) {
+                    triangles.add(new Triangle(
+                            verticesTemp[0],
+                            verticesTemp[1],
+                            verticesTemp[2]
+                    ));
+                }
+
+            } else {
+                text.next(); // skip non-numbers
             }
         }
+
+        text.close();
     }
 
     //gets

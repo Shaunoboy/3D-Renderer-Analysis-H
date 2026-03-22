@@ -40,4 +40,10 @@ public class Triangle {
 
 
     }
+
+    public String toString(){
+        return "{"+vertices[0].getX()+","+vertices[0].getY()+","+vertices[0].getZ() +"}"
+                + "{"+vertices[1].getX()+","+vertices[1].getY()+","+vertices[1].getZ() +"}"
+                +"{"+vertices[2].getX()+","+vertices[2].getY()+","+vertices[2].getZ() +"}";
+    }
 }

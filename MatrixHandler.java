@@ -55,13 +55,13 @@ public class MatrixHandler {
                                     {0,1,0,0},
                                     {ySin,0,yCos,0},
                                     {0,0,0,1}  };
-        /*double[][] zRotMatrix = {  {zCos,0,-zSin,0},
-                                    {0,1,0,0},
-                                    {zSin,0,zCos,0},
-                                    {0,0,0,1}  };*/ //z rotations are like a barrel roll
+        double[][] zRotMatrix = {  {zCos,-zSin,0,0},
+                                    {zSin,zCos,0,0},
+                                    {0,0,1,0},
+                                    {0,0,0,1}  }; //z rotations are like a barrel roll
         // rotations are not communative sadly
 
-        double[][] cameraMatrix = matMult(translationMatrix, matMult(xRotMatrix, yRotMatrix));
+        double[][] cameraMatrix = matMult(translationMatrix, matMult(xRotMatrix, matMult(yRotMatrix, zRotMatrix)));
         return cameraMatrix;
     }
 
@@ -71,7 +71,6 @@ public class MatrixHandler {
                                     {0,mesh.getScaleY(),0,0},
                                     {0,0,mesh.getScaleZ(),0},
                                     {0,0,0,1}  };
-
         // then rotations
         double xCos = Math.cos(Math.toRadians(mesh.getRotX()));
         double xSin = Math.sin(Math.toRadians(mesh.getRotX()));
@@ -81,26 +80,25 @@ public class MatrixHandler {
         double zSin = Math.sin(Math.toRadians(mesh.getRotZ()));
 
         double[][] xRotMatrix = {  {1,0,0,0},
-                {0,xCos,-xSin,0},
-                {0,xSin,xCos,0},
-                {0,0,0,1}  };
+                                    {0,xCos,-xSin,0},
+                                    {0,xSin,xCos,0},
+                                    {0,0,0,1}  };
         double[][] yRotMatrix = {  {yCos,0,-ySin,0},
-                {0,1,0,0},
-                {ySin,0,yCos,0},
-                {0,0,0,1}  };
-        double[][] zRotMatrix = {  {zCos,0,-zSin,0},
-                {0,1,0,0},
-                {zSin,0,zCos,0},
-                {0,0,0,1}  };
+                                    {0,1,0,0},
+                                    {ySin,0,yCos,0},
+                                    {0,0,0,1}  };
+        double[][] zRotMatrix = {  {zCos,-zSin,0,0},
+                                    {zSin,zCos,0,0},
+                                    {0,0,1,0},
+                                    {0,0,0,1}  };
 
         // then the transformation
         double[][] translationMatrix = {  {1,0,0,0},
-                {0,1,0,0},
-                {0,0,1,0},
-                {mesh.getX(),mesh.getY(),mesh.getZ(),1}  };
+                                            {0,1,0,0},
+                                            {0,0,1,0},
+                                            {mesh.getX(),mesh.getY(),mesh.getZ(),1}  };
         // again rotation matricies are not communative
         double[][] worldMatrix = matMult(matMult(scaleMatrix, matMult(xRotMatrix, matMult(yRotMatrix, zRotMatrix))), translationMatrix);
-
         return worldMatrix;
     }
     //matrices look like this; double[row][col]

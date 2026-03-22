@@ -110,22 +110,25 @@ public class Mesh {
 
     //sets
     public void setRotate(double x, double y, double z){
-        rotX += x;
-        rotY += y;
-        rotZ += z;
+        rotX = x;
+        rotY = y;
+        rotZ = z;
         if(rotX >= 360) rotX -= 360;
         if(rotY >= 360) rotY -= 360;
         if(rotZ >= 360) rotZ -= 360;
+        if(rotX < 0) rotX = 360 - rotX;
+        if(rotY < 0) rotY = 360 - rotY;
+        if(rotZ < 0) rotZ = 360 - rotZ;
     }
     public void setScale(double x, double y, double z){
-        scaleX *= x;
-        scaleY *= y;
-        scaleZ *= z;
+        scaleX = x;
+        scaleY = y;
+        scaleZ = z;
     }
     public void setPosition(double x, double y, double z){
-        posX *= x;
-        posY *= y;
-        posZ *= z;
+        posX = x;
+        posY = y;
+        posZ = z;
     }
 
 }

@@ -18,34 +18,35 @@ public class GraphicsPanel extends JPanel {
         g2D.setColor(Color.white);
 
         //set up camera
-        Camera camera = new Camera(0.5,3,3,90,23,0,0,0.1,1000);
+        Camera camera = new Camera(0.5,0.5,2,90,0,0,0,0.1,1000);
 
         File meshTxt = new File("cube.txt");
         Mesh mesh = null;
         try {
             mesh = new Mesh(meshTxt);
-            mesh.setPosition(0,0,10);
+            mesh.setPosition(0,0,0);
             mesh.setScale(1,1,1);
+            mesh.setRotate(0,0,0);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
         System.out.println(mesh.getTriangles().size());
 
         double[][] toWorldSpace = MatrixHandler.findWorldSpaceMatrix(mesh);
-        System.out.println("\n"+ Arrays.toString(toWorldSpace[0]));
-        System.out.println(Arrays.toString(toWorldSpace[1]));
-        System.out.println(Arrays.toString(toWorldSpace[2]));
-        System.out.println(Arrays.toString(toWorldSpace[3])+ "\n");
+            System.out.println("\n"+ Arrays.toString(toWorldSpace[0]));
+            System.out.println(Arrays.toString(toWorldSpace[1]));
+            System.out.println(Arrays.toString(toWorldSpace[2]));
+            System.out.println(Arrays.toString(toWorldSpace[3])+ "\n");
         double[][] toCameraSpace = MatrixHandler.findCameraSpaceMatrix(camera);
-        System.out.println("\n"+ Arrays.toString(toCameraSpace[0]));
-        System.out.println(Arrays.toString(toCameraSpace[1]));
-        System.out.println(Arrays.toString(toCameraSpace[2]));
-        System.out.println(Arrays.toString(toCameraSpace[3])+ "\n");
+            System.out.println("\n"+ Arrays.toString(toCameraSpace[0]));
+            System.out.println(Arrays.toString(toCameraSpace[1]));
+            System.out.println(Arrays.toString(toCameraSpace[2]));
+            System.out.println(Arrays.toString(toCameraSpace[3])+ "\n");
         double[][] projMatrix = MatrixHandler.findProjectionMatrix(camera,this);
-        System.out.println("\n"+ Arrays.toString(projMatrix[0]));
-        System.out.println(Arrays.toString(projMatrix[1]));
-        System.out.println(Arrays.toString(projMatrix[2]));
-        System.out.println(Arrays.toString(projMatrix[3])+ "\n");
+            System.out.println("\n"+ Arrays.toString(projMatrix[0]));
+            System.out.println(Arrays.toString(projMatrix[1]));
+            System.out.println(Arrays.toString(projMatrix[2]));
+            System.out.println(Arrays.toString(projMatrix[3])+ "\n");
 
 
         int count = 0;
@@ -61,12 +62,12 @@ public class GraphicsPanel extends JPanel {
 
                 //object space to world space
                 // rotation, scale, then translation
-                //vers[i] = new Vertex(MatrixHandler.verMult(triangle.vertices[i],toWorldSpace).getArr());
-                //System.out.println(vers[i].getX() + " " + vers[i].getY()+ " " + vers[i].getZ()+ " " + vers[i].getW());
+                vers[i] = new Vertex(MatrixHandler.verMult(triangle.vertices[i],toWorldSpace).getArr());
+                System.out.println(vers[i].getX() + " " + vers[i].getY()+ " " + vers[i].getZ()+ " " + vers[i].getW());
                 //transform vers to camera space
                 // translation, then rotation
                 //System.out.println(triangle.vertices[i].toString());
-                vers[i] = new Vertex(MatrixHandler.verMult(triangle.vertices[i],toCameraSpace).getArr());
+                vers[i] = new Vertex(MatrixHandler.verMult(vers[i],toCameraSpace).getArr());
                 //System.out.println(vers[i].toString());
                 //multiply by projection matrix
                 vers[i] = new Vertex(MatrixHandler.verMult(vers[i],projMatrix).getArr());

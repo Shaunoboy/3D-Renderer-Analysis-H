@@ -13,26 +13,20 @@ public class Renderer {
 
         //set up frame
         JFrame frame = new JFrame();
-        GraphicsPanel graphicsPanel = new GraphicsPanel();
+
         Container pane = frame.getContentPane();
         pane.setLayout(new BorderLayout());
-        /* horizontal slider
-        JSlider headingSlider = new JSlider(-180, 180, 0);
-        pane.add(headingSlider, BorderLayout.SOUTH);
+        // horizontal slider
+        JSlider xPosSlider = new JSlider(-2000, 2000, 0);
+        pane.add(xPosSlider, BorderLayout.SOUTH);
         // vertical slider
-        JSlider pitchSlider = new JSlider(SwingConstants.VERTICAL, -90, 90, 0);
-        pane.add(pitchSlider, BorderLayout.EAST);
-        */
-        //IT WORKS
-        //System.out.println(mesh.getTriangles().get(4).getVertices()[2].getZ());
+        JSlider xRotSlider = new JSlider(SwingConstants.VERTICAL, -90, 90, 0);
+        pane.add(xRotSlider, BorderLayout.EAST);
 
-        //headingSlider.addChangeListener(e -> graphicsPanel.repaint());
-        //pitchSlider.addChangeListener(e -> graphicsPanel.repaint());
+        GraphicsPanel graphicsPanel = new GraphicsPanel(xPosSlider, xRotSlider);
 
-        //Vertex check = new Vertex(3,3,3);
-        //check = MatrixHandler.verMult(check, MatrixHandler.findCameraSpaceMatrix(new Camera(1,1,1,90,0,0,0,0.1,1000)));
-        //System.out.println(check.toString());
-
+        xPosSlider.addChangeListener(e -> graphicsPanel.repaint());
+        xRotSlider.addChangeListener(e -> graphicsPanel.repaint());
 
         pane.add(graphicsPanel, BorderLayout.CENTER);
         frame.setVisible(true);

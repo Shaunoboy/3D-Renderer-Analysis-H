@@ -6,8 +6,12 @@ import java.util.Arrays;
 
 
 public class GraphicsPanel extends JPanel {
-    GraphicsPanel(){
 
+    public JSlider xPosSlider;
+    public JSlider xRotSlider;
+    GraphicsPanel(JSlider xPosSlider, JSlider xRotSlider){
+        this.xPosSlider = xPosSlider;
+        this.xRotSlider = xRotSlider;
     }
     public void paintComponent(Graphics g){
         super.paintComponent(g);
@@ -17,8 +21,11 @@ public class GraphicsPanel extends JPanel {
         g2D.fillRect(0,0,getWidth(),getHeight());
         g2D.setColor(Color.white);
 
+        //slider thigns
+        double pos = (double) xPosSlider.getValue();
+        double rot = (double) xRotSlider.getValue();
         //set up camera
-        Camera camera = new Camera(0.5,0.5,2,90,0,0,0,0.1,1000);
+        Camera camera = new Camera(0.5 + pos/1000,0.5,2,70,rot,0,0,0.1,1000);
 
         File meshTxt = new File("cube.txt");
         Mesh mesh = null;

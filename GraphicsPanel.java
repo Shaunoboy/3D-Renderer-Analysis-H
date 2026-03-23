@@ -25,35 +25,27 @@ public class GraphicsPanel extends JPanel {
         double pos = (double) xPosSlider.getValue();
         double rot = (double) xRotSlider.getValue();
         //set up camera
-        Camera camera = new Camera(0.5 + pos/1000,0.5,2,70,rot,0,0,0.1,1000);
+        Camera camera = new Camera(0.5,0.5,0+pos/500,70,rot,0,0,1000,0.1);
 
         File meshTxt = new File("cube.txt");
         Mesh mesh = null;
         try {
             mesh = new Mesh(meshTxt);
             mesh.setPosition(0,0,0);
-            mesh.setScale(1,1,1);
-            mesh.setRotate(0,0,0);
+            mesh.setScale(1,1,2);
+            mesh.setRotate(0,30,0);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
         System.out.println(mesh.getTriangles().size());
 
         double[][] toWorldSpace = MatrixHandler.findWorldSpaceMatrix(mesh);
-            System.out.println("\n"+ Arrays.toString(toWorldSpace[0]));
+            /*System.out.println("\n"+ Arrays.toString(toWorldSpace[0]));
             System.out.println(Arrays.toString(toWorldSpace[1]));
             System.out.println(Arrays.toString(toWorldSpace[2]));
-            System.out.println(Arrays.toString(toWorldSpace[3])+ "\n");
+            System.out.println(Arrays.toString(toWorldSpace[3])+ "\n");*/
         double[][] toCameraSpace = MatrixHandler.findCameraSpaceMatrix(camera);
-            System.out.println("\n"+ Arrays.toString(toCameraSpace[0]));
-            System.out.println(Arrays.toString(toCameraSpace[1]));
-            System.out.println(Arrays.toString(toCameraSpace[2]));
-            System.out.println(Arrays.toString(toCameraSpace[3])+ "\n");
         double[][] projMatrix = MatrixHandler.findProjectionMatrix(camera,this);
-            System.out.println("\n"+ Arrays.toString(projMatrix[0]));
-            System.out.println(Arrays.toString(projMatrix[1]));
-            System.out.println(Arrays.toString(projMatrix[2]));
-            System.out.println(Arrays.toString(projMatrix[3])+ "\n");
 
 
         int count = 0;
@@ -78,21 +70,29 @@ public class GraphicsPanel extends JPanel {
                 //System.out.println(vers[i].toString());
                 //multiply by projection matrix
                 vers[i] = new Vertex(MatrixHandler.verMult(vers[i],projMatrix).getArr());
-                //complete the projection
-                //System.out.println(vers[i].toString());
+
+                //scale into view
                 vers[i].setX( (vers[i].getX()/vers[i].getW()  + 1) * (double) getWidth() * 0.5);
                 vers[i].setY( (vers[i].getY()/vers[i].getW()  + 1) * (double) getHeight() * 0.5);
+                vers[i].setZ( (vers[i].getZ()/vers[i].getW()));
+                System.out.println(vers[i].toString());
 
                 //System.out.println(vers[i].toString() + "\n");
             }
-            System.out.println( "(" + (int) vers[0].getX()+"," +(int) vers[0].getY()+")(" + (int) vers[1].getX()+"," + (int) vers[1].getY()+")");
-            System.out.println("(" +(int) vers[1].getX()+"," + (int) vers[1].getY()+")(" + (int) vers[2].getX()+"," + (int) vers[2].getY()+")");
-            System.out.println("(" +(int) vers[0].getX()+"," + (int) vers[0].getY()+")(" + (int) vers[2].getX()+"," + (int) vers[2].getY()+")");
 
+            //check z
+            if(vers[0].getZ() > 0 && vers[0].getZ() <= 1 && vers[1].getZ() > 0 && vers[1].getZ() <= 1 && vers[2].getZ() > 0 && vers[2].getZ() <= 1){
+                g2D.setColor(Color.white);
+                g2D.drawLine((int) vers[0].getX(), (int) vers[0].getY(), (int) vers[1].getX(), (int) vers[1].getY());
+                g2D.drawLine((int) vers[1].getX(), (int) vers[1].getY(), (int) vers[2].getX(), (int) vers[2].getY());
+                g2D.drawLine((int) vers[0].getX(), (int) vers[0].getY(), (int) vers[2].getX(), (int) vers[2].getY());
+                //draw points
+                g2D.setColor(Color.red);
+                g2D.fillRect((int) vers[0].getX(), (int) vers[0].getY(), 5, 5);
+                g2D.fillRect((int) vers[2].getX(), (int) vers[2].getY(), 5, 5);
+                g2D.fillRect((int) vers[1].getX(), (int) vers[1].getY(), 5, 5);
+            }
 
-            g2D.drawLine((int) vers[0].getX(), (int) vers[0].getY(), (int) vers[1].getX(), (int) vers[1].getY());
-            g2D.drawLine((int) vers[1].getX(), (int) vers[1].getY(), (int) vers[2].getX(), (int) vers[2].getY());
-            g2D.drawLine((int) vers[0].getX(), (int) vers[0].getY(), (int) vers[2].getX(), (int) vers[2].getY());
         }
 
     }

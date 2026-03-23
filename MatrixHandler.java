@@ -21,13 +21,13 @@ public class MatrixHandler {
                                    {0,0,1,0},
                                    {0,0,0,1}  };
 
-        //double aspectRatio = (double) gPanel.getWidth()/gPanel.getHeight(); //placeholder value
+        double aspectRatio = (double) gPanel.getWidth()/gPanel.getHeight(); //placeholder value
         //setting it up
         double scale = 1 / Math.tan(Math.toRadians(camera.getFOV() * 0.5));
-        projMatrix[0][0] = scale;  // scale the x coordinates of the projected point
+        projMatrix[0][0] = aspectRatio*scale;  // scale the x coordinates of the projected point
         projMatrix[1][1] = scale;  // scale the y coordinates of the projected point 
-        projMatrix[2][2] = -camera.getzFar() / (camera.getzFar()  - camera.getzNear());  // used to remap z to [0,1]
-        projMatrix[3][2] = -camera.getzFar()  * camera.getzNear() / (camera.getzFar()  - camera.getzNear());  // used to remap z [0,1]
+        projMatrix[2][2] = camera.getzFar() / (camera.getzFar()  - camera.getzNear());  // used to remap z to [0,1]
+        projMatrix[3][2] = (-camera.getzFar()  * camera.getzNear()) / (camera.getzFar()  - camera.getzNear());  // used to remap z [0,1]
         projMatrix[2][3] = 1;  // set w = z
         projMatrix[3][3] = 0; 
 

@@ -1,16 +1,16 @@
 public class Camera {
-    double posX;
-    double posY;
-    double posZ;
+    private double posX;
+    private double posY;
+    private double posZ;
     // rotations are relative to itself NOT the world space
-    double rotX;
-    double rotY;
-    double rotZ;
-    double FOV;
+    private double rotX;
+    private double rotY;
+    private double rotZ;
+    private double FOV;
 
     // variables used for projection matrix
-    double zFar;
-    double zNear;
+    private double zFar;
+    private double zNear;
 
 
 

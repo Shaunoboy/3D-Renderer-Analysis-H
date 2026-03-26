@@ -13,6 +13,7 @@ public class Renderer {
 
         //set up frame
         JFrame frame = new JFrame();
+        frame.setTitle("Analysis Project");
 
         Container pane = frame.getContentPane();
         pane.setLayout(new BorderLayout());
@@ -30,7 +31,7 @@ public class Renderer {
 
         pane.add(graphicsPanel, BorderLayout.CENTER);
         frame.setVisible(true);
-        frame.setSize(800,800);
+        frame.setSize(1000,800);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //frame.add(graphicsPanel);
     }

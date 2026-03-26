@@ -7,8 +7,8 @@ import java.util.Arrays;
 
 public class GraphicsPanel extends JPanel {
 
-    public JSlider xPosSlider;
-    public JSlider xRotSlider;
+    private JSlider xPosSlider;
+    private JSlider xRotSlider;
     GraphicsPanel(JSlider xPosSlider, JSlider xRotSlider){
         this.xPosSlider = xPosSlider;
         this.xRotSlider = xRotSlider;
@@ -25,14 +25,14 @@ public class GraphicsPanel extends JPanel {
         double pos = (double) xPosSlider.getValue();
         double rot = (double) xRotSlider.getValue();
         //set up camera
-        Camera camera = new Camera(0.5,0.5,0+pos/500,70,rot,0,0,1000,0.1);
+        Camera camera = new Camera(0.5,0.5,0+pos/50,70,rot,0,0,10,0.1);
 
         File meshTxt = new File("cube.txt");
         Mesh mesh = null;
         try {
             mesh = new Mesh(meshTxt);
-            mesh.setPosition(0,0,0);
-            mesh.setScale(1,1,2);
+            mesh.setPosition(0,0,0.1);
+            mesh.setScale(1,1,1);
             mesh.setRotate(0,30,0);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
@@ -61,8 +61,7 @@ public class GraphicsPanel extends JPanel {
 
                 //object space to world space
                 // rotation, scale, then translation
-                vers[i] = new Vertex(MatrixHandler.verMult(triangle.vertices[i],toWorldSpace).getArr());
-                System.out.println(vers[i].getX() + " " + vers[i].getY()+ " " + vers[i].getZ()+ " " + vers[i].getW());
+                vers[i] = new Vertex(MatrixHandler.verMult(triangle.getVertices()[i], toWorldSpace).getArr());
                 //transform vers to camera space
                 // translation, then rotation
                 //System.out.println(triangle.vertices[i].toString());
@@ -72,9 +71,9 @@ public class GraphicsPanel extends JPanel {
                 vers[i] = new Vertex(MatrixHandler.verMult(vers[i],projMatrix).getArr());
 
                 //scale into view
-                vers[i].setX( (vers[i].getX()/vers[i].getW()  + 1) * (double) getWidth() * 0.5);
-                vers[i].setY( (vers[i].getY()/vers[i].getW()  + 1) * (double) getHeight() * 0.5);
-                vers[i].setZ( (vers[i].getZ()/vers[i].getW()));
+                vers[i].setX( (vers[i].getX()/Math.abs(vers[i].getW())  + 1) * (double) getWidth() * 0.5);
+                vers[i].setY( (vers[i].getY()/Math.abs(vers[i].getW())  + 1) * (double) getHeight() * 0.5);
+                vers[i].setZ( (vers[i].getZ()/Math.abs(vers[i].getW())));
                 System.out.println(vers[i].toString());
 
                 //System.out.println(vers[i].toString() + "\n");
@@ -83,6 +82,7 @@ public class GraphicsPanel extends JPanel {
             //check z
             if(vers[0].getZ() > 0 && vers[0].getZ() <= 1 && vers[1].getZ() > 0 && vers[1].getZ() <= 1 && vers[2].getZ() > 0 && vers[2].getZ() <= 1){
                 g2D.setColor(Color.white);
+                g2D.setStroke(new BasicStroke(3));
                 g2D.drawLine((int) vers[0].getX(), (int) vers[0].getY(), (int) vers[1].getX(), (int) vers[1].getY());
                 g2D.drawLine((int) vers[1].getX(), (int) vers[1].getY(), (int) vers[2].getX(), (int) vers[2].getY());
                 g2D.drawLine((int) vers[0].getX(), (int) vers[0].getY(), (int) vers[2].getX(), (int) vers[2].getY());

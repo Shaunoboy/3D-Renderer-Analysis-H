@@ -2,8 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Triangle {
-    Vertex[] vertices = new Vertex[3];
-    Color color;
+    private Vertex[] vertices = new Vertex[3];
+    private Color color;
 
     public Triangle(Vertex v1, Vertex v2, Vertex v3){
         vertices[0] = v1;

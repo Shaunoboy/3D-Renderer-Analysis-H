@@ -4,15 +4,15 @@ import java.util.*;
 
 public class Mesh {
     ArrayList<Triangle> triangles = new ArrayList<>();
-    double rotX;
-    double rotY;
-    double rotZ;
-    double posX;
-    double posY;
-    double posZ;
-    double scaleX;
-    double scaleY;
-    double scaleZ;
+    private double rotX;
+    private double rotY;
+    private double rotZ;
+    private double posX;
+    private double posY;
+    private double posZ;
+    private double scaleX;
+    private double scaleY;
+    private double scaleZ;
 
     public Mesh(Triangle... triangles){
         this.triangles.addAll(Arrays.asList(triangles));

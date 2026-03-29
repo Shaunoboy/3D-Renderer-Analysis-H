@@ -101,15 +101,10 @@ public class MatrixHandler {
         double[][] worldMatrix = matMult(matMult(scaleMatrix, matMult(xRotMatrix, matMult(yRotMatrix, zRotMatrix))), translationMatrix);
         return worldMatrix;
     }
-    //matrices look like this; double[row][col]
-    /*{{x,y,z}
-        {x,y,z}
-        {x,y,z}
-            }
-    *///matrix 2 multiplies onto matrix 1  M1 * M2; m2
-    //vertex multiplicaation {{x,y,z}} * {i {x,y,z}
-    //                                  j {x,y,z}
-    //                                  k {x,y,z}}
+
+    //vertex multiplication {{x,y,z}} * {{x,y,z}
+    //                                    {x,y,z}
+    //                                    {x,y,z}}
     public static double[][] matMult(double[][] matrix1, double[][] matrix2){
         //check if possible
         int m1ColLength = matrix1[0].length; // m1 columns length
@@ -120,16 +115,12 @@ public class MatrixHandler {
         double[][] result = new double[matrix1.length][matrix2[0].length];
 
         for(int i = 0; i < matrix1.length; i++){
-            //System.out.println(i + "i");//rows
             for(int j = 0; j < matrix2[0].length; j++){
-                //System.out.println(j + "j");// collumns
-                for(int k = 0; k < matrix1[0].length; k++){ //itterate through the elements
-                    //System.out.println(k + "k");
+                for(int k = 0; k < matrix1[0].length; k++){
                     result[i][j] += matrix1[i][k] * matrix2[k][j];
                 }
             }
         }
-        //System.out.println("\n"+Arrays.toString(result[0]));
 
         return result;
     }

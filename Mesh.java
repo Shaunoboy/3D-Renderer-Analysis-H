@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
@@ -131,4 +132,41 @@ public class Mesh {
         posZ = z;
     }
 
+    public void drawMesh(Camera camera, GraphicsPanel gPanel, Graphics2D g2D){
+        double[][] toWorldSpace = MatrixHandler.findWorldSpaceMatrix(this);
+        double[][] toCameraSpace = MatrixHandler.findCameraSpaceMatrix(camera);
+        double[][] projMatrix = MatrixHandler.findProjectionMatrix(camera,gPanel);
+
+
+        int count = 0;
+        for(Triangle triangle : getTriangles()){
+            count++;
+            //changed vertex into the screen
+            Vertex[] vers = new Vertex[3];
+
+            for(int i = 0; i < 3; i++) {
+                vers[i] = new Vertex(MatrixHandler.verMult(MatrixHandler.verMult(MatrixHandler.verMult(triangle.getVertices()[i], toWorldSpace), toCameraSpace), projMatrix).getArr());
+
+                //scale into view
+                vers[i].setX( (vers[i].getX()/Math.abs(vers[i].getW())  + 1) * (double) gPanel.getWidth() * 0.5);
+                vers[i].setY( (vers[i].getY()/Math.abs(vers[i].getW())  + 1) * (double) gPanel.getHeight() * 0.5);
+                vers[i].setZ( (vers[i].getZ()/Math.abs(vers[i].getW())));
+            }
+
+            //check z
+            if(vers[0].getZ() > 0 && vers[0].getZ() <= 1 && vers[1].getZ() > 0 && vers[1].getZ() <= 1 && vers[2].getZ() > 0 && vers[2].getZ() <= 1){
+                g2D.setColor(Color.white);
+                g2D.setStroke(new BasicStroke(3));
+                g2D.drawLine((int) vers[0].getX(), (int) vers[0].getY(), (int) vers[1].getX(), (int) vers[1].getY());
+                g2D.drawLine((int) vers[1].getX(), (int) vers[1].getY(), (int) vers[2].getX(), (int) vers[2].getY());
+                g2D.drawLine((int) vers[0].getX(), (int) vers[0].getY(), (int) vers[2].getX(), (int) vers[2].getY());
+                //draw points
+                g2D.setColor(Color.red);
+                g2D.fillRect((int) vers[0].getX(), (int) vers[0].getY(), 5, 5);
+                g2D.fillRect((int) vers[2].getX(), (int) vers[2].getY(), 5, 5);
+                g2D.fillRect((int) vers[1].getX(), (int) vers[1].getY(), 5, 5);
+            }
+
+        }
+    }
 }

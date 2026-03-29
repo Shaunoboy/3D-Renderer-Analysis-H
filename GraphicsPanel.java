@@ -25,76 +25,42 @@ public class GraphicsPanel extends JPanel {
         double pos = (double) xPosSlider.getValue();
         double rot = (double) xRotSlider.getValue();
         //set up camera
-        Camera camera = new Camera(0.5,0.5,0+pos/50,70,rot,0,0,10,0.1);
+        Camera camera = new Camera(0.5,0.5,-3+pos/50,70,-rot,0,0,100,0.1);
 
         File meshTxt = new File("cube.txt");
+
         Mesh mesh = null;
         try {
             mesh = new Mesh(meshTxt);
-            mesh.setPosition(0,0,0.1);
-            mesh.setScale(1,1,1);
-            mesh.setRotate(0,30,0);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
-        System.out.println(mesh.getTriangles().size());
-
-        double[][] toWorldSpace = MatrixHandler.findWorldSpaceMatrix(mesh);
-            /*System.out.println("\n"+ Arrays.toString(toWorldSpace[0]));
-            System.out.println(Arrays.toString(toWorldSpace[1]));
-            System.out.println(Arrays.toString(toWorldSpace[2]));
-            System.out.println(Arrays.toString(toWorldSpace[3])+ "\n");*/
-        double[][] toCameraSpace = MatrixHandler.findCameraSpaceMatrix(camera);
-        double[][] projMatrix = MatrixHandler.findProjectionMatrix(camera,this);
-
-
-        int count = 0;
-        for(Triangle triangle : mesh.getTriangles()){
-            count++;
-            System.out.println(count);
-            System.out.println(getWidth() + "width X height" + getHeight());
-            System.out.println(triangle.toString());
-            //changed vertex into the screen
-            Vertex[] vers = new Vertex[3];
-
-            for(int i = 0; i < 3; i++) {
-
-                //object space to world space
-                // rotation, scale, then translation
-                vers[i] = new Vertex(MatrixHandler.verMult(triangle.getVertices()[i], toWorldSpace).getArr());
-                //transform vers to camera space
-                // translation, then rotation
-                //System.out.println(triangle.vertices[i].toString());
-                vers[i] = new Vertex(MatrixHandler.verMult(vers[i],toCameraSpace).getArr());
-                //System.out.println(vers[i].toString());
-                //multiply by projection matrix
-                vers[i] = new Vertex(MatrixHandler.verMult(vers[i],projMatrix).getArr());
-
-                //scale into view
-                vers[i].setX( (vers[i].getX()/Math.abs(vers[i].getW())  + 1) * (double) getWidth() * 0.5);
-                vers[i].setY( (vers[i].getY()/Math.abs(vers[i].getW())  + 1) * (double) getHeight() * 0.5);
-                vers[i].setZ( (vers[i].getZ()/Math.abs(vers[i].getW())));
-                System.out.println(vers[i].toString());
-
-                //System.out.println(vers[i].toString() + "\n");
-            }
-
-            //check z
-            if(vers[0].getZ() > 0 && vers[0].getZ() <= 1 && vers[1].getZ() > 0 && vers[1].getZ() <= 1 && vers[2].getZ() > 0 && vers[2].getZ() <= 1){
-                g2D.setColor(Color.white);
-                g2D.setStroke(new BasicStroke(3));
-                g2D.drawLine((int) vers[0].getX(), (int) vers[0].getY(), (int) vers[1].getX(), (int) vers[1].getY());
-                g2D.drawLine((int) vers[1].getX(), (int) vers[1].getY(), (int) vers[2].getX(), (int) vers[2].getY());
-                g2D.drawLine((int) vers[0].getX(), (int) vers[0].getY(), (int) vers[2].getX(), (int) vers[2].getY());
-                //draw points
-                g2D.setColor(Color.red);
-                g2D.fillRect((int) vers[0].getX(), (int) vers[0].getY(), 5, 5);
-                g2D.fillRect((int) vers[2].getX(), (int) vers[2].getY(), 5, 5);
-                g2D.fillRect((int) vers[1].getX(), (int) vers[1].getY(), 5, 5);
-            }
-
+        mesh.setPosition(0,0,0);
+        mesh.setScale(1,1,1);
+        mesh.setRotate(30,30,0);
+        mesh.drawMesh(camera, this, g2D);
+/*
+        Mesh mesh2 = null;
+        try {
+            mesh2 = new Mesh(meshTxt);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
         }
+        mesh2.setPosition(0,1.2,0);
+        mesh2.setScale(1,1,1);
+        mesh2.setRotate(0,45,0);
+        mesh2.drawMesh(camera, this, g2D);
 
+        Mesh mesh3 = null;
+        try {
+            mesh3 = new Mesh(meshTxt);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        mesh3.setPosition(0,-1.2,0);
+        mesh3.setScale(1,1,1);
+        mesh3.setRotate(0,45,0);
+        mesh3.drawMesh(camera, this, g2D);*/
     }
 
 }

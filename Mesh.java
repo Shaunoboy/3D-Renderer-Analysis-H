@@ -136,17 +136,14 @@ public class Mesh {
         double[][] toWorldSpace = MatrixHandler.findWorldSpaceMatrix(this);
         double[][] toCameraSpace = MatrixHandler.findCameraSpaceMatrix(camera);
         double[][] projMatrix = MatrixHandler.findProjectionMatrix(camera,gPanel);
+        double[][] combinedMat = MatrixHandler.matMult(MatrixHandler.matMult(toWorldSpace, toCameraSpace), projMatrix);
 
-
-        int count = 0;
         for(Triangle triangle : getTriangles()){
-            count++;
             //changed vertex into the screen
             Vertex[] vers = new Vertex[3];
 
             for(int i = 0; i < 3; i++) {
-                vers[i] = new Vertex(MatrixHandler.verMult(MatrixHandler.verMult(MatrixHandler.verMult(triangle.getVertices()[i], toWorldSpace), toCameraSpace), projMatrix).getArr());
-
+                vers[i] = new Vertex(MatrixHandler.verMult(triangle.getVertices()[i],combinedMat).getArr());
                 //scale into view
                 vers[i].setX( (vers[i].getX()/Math.abs(vers[i].getW())  + 1) * (double) gPanel.getWidth() * 0.5);
                 vers[i].setY( (vers[i].getY()/Math.abs(vers[i].getW())  + 1) * (double) gPanel.getHeight() * 0.5);

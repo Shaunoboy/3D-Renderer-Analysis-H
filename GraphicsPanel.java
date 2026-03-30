@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
 
-
+//PLAY AROUND WITH THIS CLASS
 public class GraphicsPanel extends JPanel {
 
     private JSlider xPosSlider;
@@ -25,6 +25,7 @@ public class GraphicsPanel extends JPanel {
         double pos = (double) xPosSlider.getValue();
         double rot = (double) xRotSlider.getValue();
         //set up camera
+        //CAMERA VALUES
         Camera camera = new Camera(0.5,0.5,-3+pos/50,70,-rot,0,0,100,0.1);
 
         File meshTxt = new File("cube.txt");
@@ -35,7 +36,8 @@ public class GraphicsPanel extends JPanel {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
-        mesh.setPosition(0,0,0);
+        //MESH VALUES
+        mesh.setPosition(0,0,3);
         mesh.setScale(1,1,1);
         mesh.setRotate(30,30,0);
         mesh.drawMesh(camera, this, g2D);

@@ -145,7 +145,7 @@ public class Mesh {
             for(int i = 0; i < 3; i++) {
                 vers[i] = new Vertex(MatrixHandler.verMult(triangle.getVertices()[i],combinedMat).getArr());
                 //scale into view
-                vers[i].setX( (vers[i].getX()/Math.abs(vers[i].getW())*-1  + 1) * (double) gPanel.getWidth() * 0.5);
+                vers[i].setX( (vers[i].getX()/Math.abs(vers[i].getW())  + 1) * (double) gPanel.getWidth() * 0.5);
                 vers[i].setY( (vers[i].getY()/Math.abs(vers[i].getW())*-1  + 1) * (double) gPanel.getHeight() * 0.5);
                 vers[i].setZ( (vers[i].getZ()/Math.abs(vers[i].getW())));
             }
